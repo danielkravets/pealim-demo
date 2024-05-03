@@ -7769,7 +7769,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
   }
 });
 const router = createRouter({
-  history: createWebHistory("./"),
+  history: createWebHistory("/pealim-demo/"),
   routes: [
     {
       path: "/",

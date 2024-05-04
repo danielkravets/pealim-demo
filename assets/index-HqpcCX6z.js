@@ -4754,6 +4754,18 @@ function createElementBlock(type, props, children, patchFlag, dynamicProps, shap
     )
   );
 }
+function createBlock(type, props, children, patchFlag, dynamicProps) {
+  return setupBlock(
+    createVNode(
+      type,
+      props,
+      children,
+      patchFlag,
+      dynamicProps,
+      true
+    )
+  );
+}
 function isVNode(value) {
   return value ? value.__v_isVNode === true : false;
 }
@@ -4931,6 +4943,9 @@ function cloneVNode(vnode, extraProps, mergeRef = false, cloneTransition = false
 }
 function createTextVNode(text = " ", flag = 0) {
   return createVNode(Text, null, text, flag);
+}
+function createCommentVNode(text = "", asBlock = false) {
+  return asBlock ? (openBlock(), createBlock(Comment, null, text)) : createVNode(Comment, null, text);
 }
 function normalizeVNode(child) {
   if (child == null || typeof child === "boolean") {
@@ -5880,7 +5895,6 @@ function createPinia() {
   });
   return pinia;
 }
-const _imports_0 = "data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20261.76%20226.69'%3e%3cpath%20d='M161.096.001l-30.225%2052.351L100.647.001H-.005l130.877%20226.688L261.749.001z'%20fill='%2341b883'/%3e%3cpath%20d='M161.096.001l-30.225%2052.351L100.647.001H52.346l78.526%20136.01L209.398.001z'%20fill='%2334495e'/%3e%3c/svg%3e";
 /*!
   * vue-router v4.3.2
   * (c) 2024 Eduardo San Martin Morote
@@ -7679,27 +7693,17 @@ function extractChangingRecords(to, from) {
   }
   return [leavingRecords, updatingRecords, enteringRecords];
 }
-const _withScopeId$1 = (n) => (pushScopeId("data-v-92588e18"), n = n(), popScopeId(), n);
-const _hoisted_1$1 = /* @__PURE__ */ _withScopeId$1(() => /* @__PURE__ */ createBaseVNode("img", {
-  alt: "Vue logo",
-  class: "logo",
-  src: _imports_0,
-  width: "125",
-  height: "125"
-}, null, -1));
-const _hoisted_2$1 = { class: "wrapper" };
-const _hoisted_3$1 = /* @__PURE__ */ _withScopeId$1(() => /* @__PURE__ */ createBaseVNode("nav", null, null, -1));
-const _sfc_main$2 = /* @__PURE__ */ defineComponent({
+const _hoisted_1$3 = { class: "header-container" };
+const _hoisted_2$2 = { class: "wrapper" };
+const _sfc_main$3 = /* @__PURE__ */ defineComponent({
   __name: "App",
   setup(__props) {
     return (_ctx, _cache) => {
       const _component_Search = resolveComponent("Search");
       return openBlock(), createElementBlock(Fragment, null, [
-        createBaseVNode("header", null, [
-          _hoisted_1$1,
-          createBaseVNode("div", _hoisted_2$1, [
-            createVNode(_component_Search),
-            _hoisted_3$1
+        createBaseVNode("header", _hoisted_1$3, [
+          createBaseVNode("div", _hoisted_2$2, [
+            createVNode(_component_Search)
           ])
         ]),
         createVNode(unref(RouterView))
@@ -7714,7 +7718,7 @@ const _export_sfc = (sfc, props) => {
   }
   return target;
 };
-const App = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-92588e18"]]);
+const App = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__scopeId", "data-v-7e2d3550"]]);
 const __vite__wasmUrl = "/pealim-demo/assets/libpealimrs_bg-KSA6cax3.wasm";
 const __vite__initWasm = async (opts = {}, url) => {
   let result;
@@ -8478,31 +8482,192 @@ class WordIndexService {
    */
   suggestWordData(prefix, limit) {
     if (prefix && prefix.length > 1 && this.wordIndexInstance) {
-      return this.wordIndexInstance.suggest(prefix, limit);
+      const t0 = performance.now();
+      const wordData = this.wordIndexInstance.suggest(prefix, limit);
+      const t1 = performance.now();
+      console.log(`suggestWordData took ${(t1 - t0).toFixed(2)} milliseconds.`);
+      return wordData;
     } else {
       return [];
     }
   }
 }
-const _withScopeId = (n) => (pushScopeId("data-v-d534db82"), n = n(), popScopeId(), n);
-const _hoisted_1 = { key: 0 };
-const _hoisted_2 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("p", null, "Search Results:", -1));
-const _hoisted_3 = { key: 1 };
-const _hoisted_4 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("p", null, "No results found.", -1));
-const _hoisted_5 = [
-  _hoisted_4
+const doesNotStartWithHebrew = (word) => {
+  const hebrewRegex = /^[\u0590-\u05FF]/;
+  return !hebrewRegex.test(word);
+};
+const translate = async (word, lang_from, lang_to) => {
+  let payload = {
+    client: "gtx",
+    dt: "t",
+    sl: lang_from,
+    tl: lang_to,
+    q: word
+  };
+  try {
+    const apiUrl = "https://translate.googleapis.com/translate_a/single";
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: new URLSearchParams(payload)
+    });
+    if (!response.ok)
+      throw new Error("Failed to translate");
+    const json = await response.json();
+    console.log("json[0][0][0]", json[0][0][0]);
+    return json[0][0][0];
+  } catch (error) {
+    console.error("Translation error:", error);
+    return "";
+  }
+};
+const _withScopeId$1 = (n) => (pushScopeId("data-v-eb2170cd"), n = n(), popScopeId(), n);
+const _hoisted_1$2 = {
+  key: 0,
+  class: "word-data-view"
+};
+const _hoisted_2$1 = /* @__PURE__ */ _withScopeId$1(() => /* @__PURE__ */ createBaseVNode("thead", null, [
+  /* @__PURE__ */ createBaseVNode("tr", null, [
+    /* @__PURE__ */ createBaseVNode("th", { rowspan: "2" }, "Verb form"),
+    /* @__PURE__ */ createBaseVNode("th", { rowspan: "2" }, "Person"),
+    /* @__PURE__ */ createBaseVNode("th", {
+      class: "column-header",
+      colspan: "2"
+    }, "Singular"),
+    /* @__PURE__ */ createBaseVNode("th", {
+      class: "column-header",
+      colspan: "2"
+    }, "Plural")
+  ]),
+  /* @__PURE__ */ createBaseVNode("tr", null, [
+    /* @__PURE__ */ createBaseVNode("th", { class: "column-header" }, "Masculine"),
+    /* @__PURE__ */ createBaseVNode("th", { class: "column-header" }, "Feminine"),
+    /* @__PURE__ */ createBaseVNode("th", { class: "column-header" }, "Masculine"),
+    /* @__PURE__ */ createBaseVNode("th", { class: "column-header" }, "Feminine")
+  ])
+], -1));
+const _hoisted_3$1 = ["rowspan"];
+const _hoisted_4$1 = ["colspan"];
+const _hoisted_5$1 = { key: 1 };
+const _hoisted_6$1 = /* @__PURE__ */ _withScopeId$1(() => /* @__PURE__ */ createBaseVNode("p", null, "No word data available.", -1));
+const _hoisted_7$1 = [
+  _hoisted_6$1
+];
+const _sfc_main$2 = /* @__PURE__ */ defineComponent({
+  __name: "WordDataView",
+  props: {
+    wordData: Object
+  },
+  setup(__props) {
+    const props = __props;
+    const rowsByTense = computed(() => {
+      const t0 = performance.now();
+      if (!props.wordData)
+        return /* @__PURE__ */ new Map();
+      const groupedByTense = props.wordData.forms.reduce((acc, form) => {
+        if (!acc.has(form.tense)) {
+          acc.set(form.tense, []);
+        }
+        acc.get(form.tense).push(form);
+        return acc;
+      }, /* @__PURE__ */ new Map());
+      let reduce = /* @__PURE__ */ new Map();
+      groupedByTense.forEach((forms, tense) => {
+        const groupedByPerson = forms.reduce((acc, form) => {
+          if (!acc.has(form.person)) {
+            acc.set(form.person, []);
+          }
+          acc.get(form.person).push(form);
+          return acc;
+        }, /* @__PURE__ */ new Map());
+        reduce.set(tense, groupedByPerson);
+      });
+      const t1 = performance.now();
+      console.log(`rowsByTense took ${(t1 - t0).toFixed(2)} milliseconds.`);
+      return reduce;
+    });
+    const getColspan = (rowGroup) => {
+      return rowGroup.length === 4 ? 1 : 2;
+    };
+    return (_ctx, _cache) => {
+      return __props.wordData ? (openBlock(), createElementBlock("div", _hoisted_1$2, [
+        createBaseVNode("h2", null, toDisplayString(__props.wordData.word_normalized), 1),
+        createBaseVNode("p", null, "Vowelled: " + toDisplayString(__props.wordData.word), 1),
+        createBaseVNode("p", null, "Transcription: " + toDisplayString(__props.wordData.transcription), 1),
+        createBaseVNode("p", null, "Meaning: " + toDisplayString(__props.wordData.word_en), 1),
+        createBaseVNode("p", null, "Binyan: " + toDisplayString(__props.wordData.binyan), 1),
+        createBaseVNode("p", null, "URL ID: " + toDisplayString(__props.wordData.url_id), 1),
+        createBaseVNode("div", null, [
+          createBaseVNode("table", null, [
+            _hoisted_2$1,
+            createBaseVNode("tbody", null, [
+              (openBlock(true), createElementBlock(Fragment, null, renderList(rowsByTense.value, ([tense, tenseGroup], tenseIndex) => {
+                return openBlock(), createElementBlock(Fragment, { key: tense }, [
+                  (openBlock(true), createElementBlock(Fragment, null, renderList(tenseGroup, ([person, wordDatas], rowIndex) => {
+                    return openBlock(), createElementBlock("tr", null, [
+                      rowIndex == 0 ? (openBlock(), createElementBlock("th", {
+                        key: 0,
+                        rowspan: tenseGroup.size
+                      }, toDisplayString(tense), 9, _hoisted_3$1)) : createCommentVNode("", true),
+                      createBaseVNode("th", null, toDisplayString(person == "all" ? "" : person), 1),
+                      (openBlock(true), createElementBlock(Fragment, null, renderList(wordDatas, (row) => {
+                        return openBlock(), createElementBlock("td", {
+                          colspan: getColspan(wordDatas)
+                        }, [
+                          createBaseVNode("p", null, [
+                            createBaseVNode("span", null, toDisplayString(row.form_normalized), 1)
+                          ]),
+                          createBaseVNode("p", null, [
+                            createBaseVNode("span", null, toDisplayString(row.form), 1)
+                          ]),
+                          createBaseVNode("p", null, [
+                            createBaseVNode("span", null, toDisplayString(row.transcription), 1)
+                          ]),
+                          createBaseVNode("p", null, [
+                            createBaseVNode("span", null, toDisplayString(row.meaning), 1)
+                          ])
+                        ], 8, _hoisted_4$1);
+                      }), 256))
+                    ]);
+                  }), 256))
+                ], 64);
+              }), 128))
+            ])
+          ])
+        ])
+      ])) : (openBlock(), createElementBlock("div", _hoisted_5$1, _hoisted_7$1));
+    };
+  }
+});
+const WordDataView = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-eb2170cd"]]);
+const _withScopeId = (n) => (pushScopeId("data-v-3bfd8add"), n = n(), popScopeId(), n);
+const _hoisted_1$1 = { class: "main-container" };
+const _hoisted_2 = { class: "search-container" };
+const _hoisted_3 = { class: "search-results" };
+const _hoisted_4 = { key: 0 };
+const _hoisted_5 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("p", null, "Search Results:", -1));
+const _hoisted_6 = ["onClick"];
+const _hoisted_7 = { key: 1 };
+const _hoisted_8 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("p", null, "No results found.", -1));
+const _hoisted_9 = [
+  _hoisted_8
 ];
 const _sfc_main$1 = /* @__PURE__ */ defineComponent({
   __name: "Search",
   setup(__props) {
-    console.log("Search.vue");
     const searchQuery = ref("");
     const wordResults = ref([]);
     const wordIndexService = new WordIndexService();
+    const selectedWord = ref(null);
     onMounted(async () => {
       console.log("onMounted");
       wordIndexService.initializeWordIndex();
     });
+    const selectWord = (word) => {
+      selectedWord.value = word;
+    };
     const performSearch = async () => {
       console.log("performSearch");
       let searchQueryValue = searchQuery.value;
@@ -8515,7 +8680,7 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
       if (searchQueryValue && searchQueryValue.length > 0) {
         console.log("searchQueryValue search", searchQueryValue);
         let value = wordIndexService.getWordData(searchQueryValue);
-        wordResults.value = value.map((e) => e.word_normalized + ": " + e.word_en);
+        wordResults.value = value;
       } else {
         wordResults.value = [];
       }
@@ -8524,82 +8689,68 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
       console.log("watch searchQuery", newValue, oldValue);
       if (newValue && newValue.length > 1) {
         let value = wordIndexService.suggestWordData(newValue, 15);
-        wordResults.value = value.map((e) => e.word_normalized + ": " + e.word_en);
+        wordResults.value = value;
       } else {
         wordResults.value = [];
       }
     }, { immediate: true });
-    const doesNotStartWithHebrew = (word) => {
-      const hebrewRegex = /^[\u0590-\u05FF]/;
-      return !hebrewRegex.test(word);
-    };
-    const translate = async (word, lang_from, lang_to) => {
-      let payload = {
-        client: "gtx",
-        dt: "t",
-        sl: lang_from,
-        tl: lang_to,
-        q: word
-      };
-      try {
-        const apiUrl = "https://translate.googleapis.com/translate_a/single";
-        const response = await fetch(apiUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-          },
-          body: new URLSearchParams(payload)
-        });
-        if (!response.ok)
-          throw new Error("Failed to translate");
-        const json = await response.json();
-        console.log("json[0][0][0]", json[0][0][0]);
-        return json[0][0][0];
-      } catch (error) {
-        console.error("Translation error:", error);
-        return "";
-      }
-    };
     return (_ctx, _cache) => {
-      return openBlock(), createElementBlock("div", null, [
-        withDirectives(createBaseVNode("input", {
-          type: "text",
-          "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => searchQuery.value = $event),
-          placeholder: "Search for words..."
-        }, null, 512), [
-          [vModelText, searchQuery.value]
+      return openBlock(), createElementBlock("div", _hoisted_1$1, [
+        createBaseVNode("div", _hoisted_2, [
+          withDirectives(createBaseVNode("input", {
+            class: "search-input",
+            type: "text",
+            "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => searchQuery.value = $event),
+            placeholder: "Search for words..."
+          }, null, 512), [
+            [vModelText, searchQuery.value]
+          ]),
+          createBaseVNode("button", {
+            class: "search-button",
+            onClick: performSearch
+          }, "Search")
         ]),
-        createBaseVNode("button", { onClick: performSearch }, "Search"),
-        wordResults.value.length > 0 ? (openBlock(), createElementBlock("div", _hoisted_1, [
-          _hoisted_2,
-          createBaseVNode("ul", null, [
-            (openBlock(true), createElementBlock(Fragment, null, renderList(wordResults.value, (result, index) => {
-              return openBlock(), createElementBlock("li", { key: index }, toDisplayString(result), 1);
-            }), 128))
-          ])
-        ])) : (openBlock(), createElementBlock("div", _hoisted_3, _hoisted_5))
+        createBaseVNode("div", _hoisted_3, [
+          wordResults.value.length > 0 ? (openBlock(), createElementBlock("div", _hoisted_4, [
+            _hoisted_5,
+            createBaseVNode("ul", null, [
+              (openBlock(true), createElementBlock(Fragment, null, renderList(wordResults.value, (word, index) => {
+                return openBlock(), createElementBlock("li", {
+                  key: index,
+                  onClick: ($event) => selectWord(word)
+                }, toDisplayString(word.word_normalized + ": " + word.word_en), 9, _hoisted_6);
+              }), 128))
+            ])
+          ])) : (openBlock(), createElementBlock("div", _hoisted_7, _hoisted_9))
+        ]),
+        selectedWord.value ? (openBlock(), createBlock(WordDataView, {
+          key: 0,
+          wordData: selectedWord.value
+        }, null, 8, ["wordData"])) : createCommentVNode("", true)
       ]);
     };
   }
 });
-const Search = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-d534db82"]]);
+const Search = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-3bfd8add"]]);
+const _hoisted_1 = { class: "search-container" };
 const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "SearchView",
   setup(__props) {
     return (_ctx, _cache) => {
-      return openBlock(), createElementBlock("main", null, [
+      return openBlock(), createElementBlock("div", _hoisted_1, [
         createVNode(Search)
       ]);
     };
   }
 });
+const SearchView = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-0838ec7d"]]);
 const router = createRouter({
   history: createWebHistory("/pealim-demo/"),
   routes: [
     {
       path: "/",
       name: "search",
-      component: _sfc_main
+      component: SearchView
     }
   ]
 });

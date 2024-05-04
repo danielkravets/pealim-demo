@@ -1,0 +1,183 @@
+/*!* color palette from <https://github.com/vuejs/theme> *!*/
+/*:root {*/
+/*  --vt-c-white: #ffffff;*/
+/*  --vt-c-white-soft: #f8f8f8;*/
+/*  --vt-c-white-mute: #f2f2f2;*/
+/*  --vt-c-black: #181818;*/
+/*  --vt-c-black-soft: #222222;*/
+/*  --vt-c-black-mute: #282828;*/
+/*  --vt-c-indigo: #2c3e50;*/
+/*  --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);*/
+/*  --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);*/
+/*  --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);*/
+/*  --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);*/
+/*  --vt-c-text-light-1: var(--vt-c-indigo);*/
+/*  --vt-c-text-light-2: rgba(60, 60, 60, 0.66);*/
+/*  --vt-c-text-dark-1: var(--vt-c-white);*/
+/*  --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);*/
+/*}*/
+/*!* semantic color variables for this project *!*/
+/*:root {*/
+/*  --color-background: var(--vt-c-white);*/
+/*  --color-background-soft: var(--vt-c-white-soft);*/
+/*  --color-background-mute: var(--vt-c-white-mute);*/
+/*  --color-border: var(--vt-c-divider-light-2);*/
+/*  --color-border-hover: var(--vt-c-divider-light-1);*/
+/*  --color-heading: var(--vt-c-text-light-1);*/
+/*  --color-text: var(--vt-c-text-light-1);*/
+/*  --section-gap: 160px;*/
+/*}*/
+/*@media (prefers-color-scheme: dark) {*/
+/*  :root {*/
+/*    --color-background: var(--vt-c-black);*/
+/*    --color-background-soft: var(--vt-c-black-soft);*/
+/*    --color-background-mute: var(--vt-c-black-mute);*/
+/*    --color-border: var(--vt-c-divider-dark-2);*/
+/*    --color-border-hover: var(--vt-c-divider-dark-1);*/
+/*    --color-heading: var(--vt-c-text-dark-1);*/
+/*    --color-text: var(--vt-c-text-dark-2);*/
+/*  }*/
+/*}*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+body {
+  /*min-height: 100vh;*/
+  color: var(--color-text);
+  background: var(--color-background);
+  transition:
+    color 0.5s,
+    background-color 0.5s;
+  line-height: 1.6;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif;
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-weight: normal;
+}
+/*
+a,
+.green {
+  text-decoration: none;
+  color: hsla(160, 100%, 37%, 1);
+  transition: 0.4s;
+  padding: 3px;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
+}
+*/
+@media (min-width: 1024px) {
+  /*body {
+    display: flex;
+    place-items: center;
+  }*/
+
+  /*#app {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 2rem;
+  }*/
+}
+
+/*.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; !* Updated to center align-items for aesthetic reasons *!
+  position: fixed;     !* Added to fix the position at the top *!
+  top: 0;              !* Aligns the container at the top edge of the viewport *!
+  left: 0;             !* Aligns the container to the left edge of the viewport *!
+  right: 0;            !* Ensures the container stretches right across the viewport *!
+  margin-top: 1000px;       !* Optional: Removes any top margin if not needed *!
+  z-index: 1000;       !* Ensures the header is above other content *!
+  background-color: #fff; !* Optional: Adds a background color if the header needs to be opaque *!
+}*/
+.logo[data-v-6e835618] {
+  margin: 0;
+}
+
+
+.word-data-view[data-v-a030cc8b] {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+table[data-v-a030cc8b] {
+  width: 100%;
+  border-collapse: collapse;
+}
+th[data-v-a030cc8b], td[data-v-a030cc8b] {
+  border: 1px solid #ccc;
+  padding: 5px;
+  text-align: center;
+}
+/*!
+ * 
+ *   simple-keyboard v3.7.78
+ *   https://github.com/hodgef/simple-keyboard
+ *
+ *   Copyright (c) Francisco Hodge (https://github.com/hodgef) and project contributors.
+ *
+ *   This source code is licensed under the MIT license found in the
+ *   LICENSE file in the root directory of this source tree.
+ *
+ */.hg-theme-default{background-color:#ececec;border-radius:5px;box-sizing:border-box;font-family:HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;overflow:hidden;padding:5px;touch-action:manipulation;-webkit-user-select:none;-moz-user-select:none;user-select:none;width:100%}.hg-theme-default .hg-button span{pointer-events:none}.hg-theme-default button.hg-button{border-width:0;font-size:inherit;outline:0}.hg-theme-default .hg-button{display:inline-block;flex-grow:1}.hg-theme-default .hg-row{display:flex}.hg-theme-default .hg-row:not(:last-child){margin-bottom:5px}.hg-theme-default .hg-row .hg-button-container,.hg-theme-default .hg-row .hg-button:not(:last-child){margin-right:5px}.hg-theme-default .hg-row>div:last-child{margin-right:0}.hg-theme-default .hg-row .hg-button-container{display:flex}.hg-theme-default .hg-button{align-items:center;background:#fff;border-bottom:1px solid #b5b5b5;border-radius:5px;box-shadow:0 0 3px -1px rgba(0,0,0,.3);box-sizing:border-box;cursor:pointer;display:flex;height:40px;justify-content:center;padding:5px;-webkit-tap-highlight-color:rgba(0,0,0,0)}.hg-theme-default .hg-button.hg-standardBtn{width:20px}.hg-theme-default .hg-button.hg-activeButton{background:#efefef}.hg-theme-default.hg-layout-numeric .hg-button{align-items:center;display:flex;height:60px;justify-content:center;width:33.3%}.hg-theme-default .hg-button.hg-button-numpadadd,.hg-theme-default .hg-button.hg-button-numpadenter{height:85px}.hg-theme-default .hg-button.hg-button-numpad0{width:105px}.hg-theme-default .hg-button.hg-button-com{max-width:85px}.hg-theme-default .hg-button.hg-standardBtn.hg-button-at{max-width:45px}.hg-theme-default .hg-button.hg-selectedButton{background:rgba(5,25,70,.53);color:#fff}.hg-theme-default .hg-button.hg-standardBtn[data-skbtn=".com"]{max-width:82px}.hg-theme-default .hg-button.hg-standardBtn[data-skbtn="@"]{max-width:60px}.hg-candidate-box{background:#ececec;border-bottom:2px solid #b5b5b5;border-radius:5px;display:inline-flex;margin-top:-10px;position:absolute;transform:translateY(-100%);-webkit-user-select:none;-moz-user-select:none;user-select:none}ul.hg-candidate-box-list{display:flex;flex:1;list-style:none;margin:0;padding:0}li.hg-candidate-box-list-item{align-items:center;display:flex;height:40px;justify-content:center;width:40px}li.hg-candidate-box-list-item:hover{background:rgba(0,0,0,.03);cursor:pointer}li.hg-candidate-box-list-item:active{background:rgba(0,0,0,.1)}.hg-candidate-box-prev:before{content:"◄"}.hg-candidate-box-next:before{content:"►"}.hg-candidate-box-next,.hg-candidate-box-prev{align-items:center;color:#969696;cursor:pointer;display:flex;padding:0 10px}.hg-candidate-box-next{border-bottom-right-radius:5px;border-top-right-radius:5px}.hg-candidate-box-prev{border-bottom-left-radius:5px;border-top-left-radius:5px}.hg-candidate-box-btn-active{color:#444}
+.main-container[data-v-532f1e93] {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.search-container[data-v-532f1e93] {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.search-input[data-v-532f1e93] {
+  width: 30%;
+  /*flex-grow: 2;*/
+}
+.search-button[data-v-532f1e93] {
+  margin-left: 10px;
+}
+.search-result[data-v-532f1e93] {
+  cursor: pointer;
+  padding: 5px;
+  border: 1px solid #ccc;
+  margin-top: 5px;
+}
+.simple-keyboard[data-v-532f1e93] {
+  max-width: 850px;
+}
+
+.search-container[data-v-0838ec7d] {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  top: 0;
+}

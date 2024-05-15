@@ -6762,7 +6762,7 @@ var __publicField = (obj, key, value) => {
       "data-v-6e835618"
     ]
   ]);
-  const __vite__wasmUrl = "" + new URL("libpealimrs_bg-BYHqUndX.wasm", import.meta.url).href;
+  const __vite__wasmUrl = "/pealim-demo/assets/libpealimrs_bg-BYHqUndX.wasm";
   const __vite__initWasm = async (opts = {}, url) => {
     let result;
     if (url.startsWith("data:")) {
@@ -7674,7 +7674,7 @@ var __publicField = (obj, key, value) => {
   class IndexClient {
     constructor() {
       __publicField(this, "worker");
-      this.worker = new Worker(new URL("" + new URL("worker-DvlwkRvT.js", import.meta.url).href, import.meta.url), {
+      this.worker = new Worker(new URL("/pealim-demo/assets/worker-CJYLiOGb.js", import.meta.url), {
         type: "module"
       });
       console.log("Worker has been initialized.");
@@ -17998,7 +17998,7 @@ var __publicField = (obj, key, value) => {
     ]
   ]);
   const router = createRouter({
-    history: createWebHistory("./"),
+    history: createWebHistory("/pealim-demo/"),
     routes: [
       {
         path: "/",

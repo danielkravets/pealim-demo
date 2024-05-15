@@ -1,9 +1,8 @@
 this.document = { currentScript: { src: this.location.href } };
 (function() {
   "use strict";
-  var _documentCurrentScript = typeof document !== "undefined" ? document.currentScript : null;
   (async () => {
-    var __vite__wasmUrl = "" + new URL("libpealimrs_bg-BYHqUndX.wasm", _documentCurrentScript && _documentCurrentScript.src || new URL("assets/worker-DvlwkRvT.js", document.baseURI).href).href;
+    var __vite__wasmUrl = "/pealim-demo/assets/libpealimrs_bg-BYHqUndX.wasm";
     var __vite__initWasm = async (opts = {}, url) => {
       let result;
       if (url.startsWith("data:")) {
